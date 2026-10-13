@@ -15,7 +15,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 
 type Experience = {
   period: string;
@@ -110,6 +110,8 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [formError, setFormError] = useState('');
+  const [captchaToken, setCaptchaToken] = useState('');
+  const captchaRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -126,6 +128,7 @@ function App() {
       message: formData.get('message') as string,
       subject: `New contact form submission from ${formData.get('name')}`,
       from_name: 'Portfolio Website',
+      hcaptcha_token: captchaToken,
     };
 
     try {
@@ -146,9 +149,13 @@ function App() {
 
       setFormStatus('success');
       (e.target as HTMLFormElement).reset();
+      setCaptchaToken('');
+      if (captchaRef.current && window.hcaptcha) window.hcaptcha.reset(captchaRef.current);
     } catch (err) {
       setFormStatus('error');
       setFormError(err instanceof Error ? err.message : 'Something went wrong.');
+      setCaptchaToken('');
+      if (captchaRef.current && window.hcaptcha) window.hcaptcha.reset(captchaRef.current);
     }
   };
 
@@ -281,7 +288,19 @@ function App() {
                     <textarea id="message" name="message" rows={5} required placeholder="Tell me about your project, problem, or idea…" disabled={formStatus === 'submitting'} />
                   </div>
                   {formStatus === 'error' && <p className="form-error">{formError}</p>}
-                  <button type="submit" className="button button-light submit-btn" disabled={formStatus === 'submitting'}>
+                  <div className="captcha-row">
+                    <div
+                      className="h-captcha"
+                      ref={captchaRef}
+                      data-sitekey="10000000-ffff-ffff-ffff-000000000001"
+                      data-theme="dark"
+                      onVerify={(token: string) => setCaptchaToken(token)}
+                      onExpire={() => setCaptchaToken('')}
+                      onChalExpired={() => setCaptchaToken('')}
+                      onError={() => setCaptchaToken('')}
+                    />
+                  </div>
+                  <button type="submit" className="button button-light submit-btn" disabled={formStatus === 'submitting' || !captchaToken}>
                     {formStatus === 'submitting' ? <>Sending… <Loader2 size={16} className="spin" /></> : <>Send message <Send size={16} /></>}
                   </button>
                 </form>

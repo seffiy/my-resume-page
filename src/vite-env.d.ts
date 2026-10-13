@@ -7,3 +7,18 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface HCaptcha {
+  reset(el?: HTMLElement): void;
+}
+
+interface Window {
+  hcaptcha?: HCaptcha;
+}
+
+interface HTMLDivElement {
+  onVerify?: (token: string) => void;
+  onExpire?: () => void;
+  onChalExpired?: () => void;
+  onError?: () => void;
+}

@@ -15,15 +15,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { useEffect, useState, type FormEvent } from 'react';
-
-type ThemeName = 'warm-sage' | 'noir-gold' | 'azure-horizon';
-
-const themes: { name: ThemeName; label: string; dotClass: string }[] = [
-  { name: 'warm-sage', label: 'Warm Sage', dotClass: 'theme-dot-sage' },
-  { name: 'noir-gold', label: 'Noir & Gold', dotClass: 'theme-dot-noir' },
-  { name: 'azure-horizon', label: 'Azure Horizon', dotClass: 'theme-dot-azure' },
-];
+import { useState, type FormEvent } from 'react';
 
 type Experience = {
   period: string;
@@ -118,14 +110,6 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [formError, setFormError] = useState('');
-  const [activeTheme, setActiveTheme] = useState<ThemeName>(() => {
-    return (localStorage.getItem('portfolio-theme') as ThemeName) || 'warm-sage';
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', activeTheme);
-    localStorage.setItem('portfolio-theme', activeTheme);
-  }, [activeTheme]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -309,18 +293,6 @@ function App() {
 
       <footer className="site-footer"><div className="container footer-inner"><span>© {new Date().getFullYear()} Yosef (Seffi) Yaaran</span><div className="social-links"><a href="mailto:seffi@gmail.com" aria-label="Email Yosef"><Mail size={17} /></a><a href="https://www.linkedin.com/in/seffiyaaran" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a><a className="placeholder-link" href="#contact" aria-label="GitHub placeholder"><Github size={17} /><span>GitHub — add link</span></a></div><span className="footer-note"><MapPin size={14} /> Seattle, WA</span></div></footer>
 
-      <div className="theme-switcher" role="group" aria-label="Theme switcher">
-        <span className="theme-switcher-label">Theme</span>
-        {themes.map((t) => (
-          <button
-            key={t.name}
-            className={`theme-dot ${t.dotClass} ${activeTheme === t.name ? 'is-active' : ''}`}
-            onClick={() => setActiveTheme(t.name)}
-            aria-label={t.label}
-            title={t.label}
-          />
-        ))}
-      </div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 
 type Experience = {
   period: string;
@@ -112,6 +112,34 @@ function App() {
   const [formError, setFormError] = useState('');
   const [captchaToken, setCaptchaToken] = useState('');
   const captchaRef = useRef<HTMLDivElement>(null);
+  const captchaRendered = useRef(false);
+
+  useEffect(() => {
+    if (formStatus === 'success' || captchaRendered.current) return;
+    const tryRender = () => {
+      if (!window.hcaptcha || !captchaRef.current) return false;
+      try {
+        window.hcaptcha.render(captchaRef.current, {
+          sitekey: '10000000-ffff-ffff-ffff-000000000001',
+          theme: 'dark',
+          callback: (token: string) => setCaptchaToken(token),
+          'expired-callback': () => setCaptchaToken(''),
+          'chalexpired-callback': () => setCaptchaToken(''),
+          'error-callback': () => setCaptchaToken(''),
+        });
+        captchaRendered.current = true;
+        return true;
+      } catch {
+        return false;
+      }
+    };
+    if (!tryRender()) {
+      const interval = setInterval(() => {
+        if (tryRender()) clearInterval(interval);
+      }, 200);
+      return () => clearInterval(interval);
+    }
+  }, [formStatus]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -289,16 +317,7 @@ function App() {
                   </div>
                   {formStatus === 'error' && <p className="form-error">{formError}</p>}
                   <div className="captcha-row">
-                    <div
-                      className="h-captcha"
-                      ref={captchaRef}
-                      data-sitekey="10000000-ffff-ffff-ffff-000000000001"
-                      data-theme="dark"
-                      onVerify={(token: string) => setCaptchaToken(token)}
-                      onExpire={() => setCaptchaToken('')}
-                      onChalExpired={() => setCaptchaToken('')}
-                      onError={() => setCaptchaToken('')}
-                    />
+                    <div ref={captchaRef} />
                   </div>
                   <button type="submit" className="button button-light submit-btn" disabled={formStatus === 'submitting' || !captchaToken}>
                     {formStatus === 'submitting' ? <>Sending… <Loader2 size={16} className="spin" /></> : <>Send message <Send size={16} /></>}

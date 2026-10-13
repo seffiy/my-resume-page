@@ -8,17 +8,20 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
+interface HCaptchaRenderOptions {
+  sitekey: string;
+  theme?: 'light' | 'dark';
+  callback?: (token: string) => void;
+  'expired-callback'?: () => void;
+  'chalexpired-callback'?: () => void;
+  'error-callback'?: () => void;
+}
+
 interface HCaptcha {
+  render(el: HTMLElement, options: HCaptchaRenderOptions): string;
   reset(el?: HTMLElement): void;
 }
 
 interface Window {
   hcaptcha?: HCaptcha;
-}
-
-interface HTMLDivElement {
-  onVerify?: (token: string) => void;
-  onExpire?: () => void;
-  onChalExpired?: () => void;
-  onError?: () => void;
 }

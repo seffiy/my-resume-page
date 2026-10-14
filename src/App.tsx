@@ -112,14 +112,14 @@ function App() {
   const [formError, setFormError] = useState('');
   const [captchaToken, setCaptchaToken] = useState('');
   const captchaRef = useRef<HTMLDivElement>(null);
-  const captchaRendered = useRef(false);
+  const captchaWidgetId = useRef<string | null>(null);
 
   useEffect(() => {
-    if (formStatus === 'success' || captchaRendered.current) return;
+    if (formStatus === 'success' || captchaWidgetId.current !== null) return;
     const tryRender = () => {
       if (!window.hcaptcha || !captchaRef.current) return false;
       try {
-        window.hcaptcha.render(captchaRef.current, {
+        captchaWidgetId.current = window.hcaptcha.render(captchaRef.current, {
           sitekey: '10000000-ffff-ffff-ffff-000000000001',
           theme: 'dark',
           callback: (token: string) => setCaptchaToken(token),
@@ -127,7 +127,6 @@ function App() {
           'chalexpired-callback': () => setCaptchaToken(''),
           'error-callback': () => setCaptchaToken(''),
         });
-        captchaRendered.current = true;
         return true;
       } catch {
         return false;
@@ -142,6 +141,15 @@ function App() {
   }, [formStatus]);
 
   const closeMenu = () => setMenuOpen(false);
+
+  const resetCaptcha = () => {
+    setCaptchaToken('');
+    try {
+      if (captchaWidgetId.current !== null) window.hcaptcha?.reset(captchaWidgetId.current);
+    } catch {
+      // A failed captcha reset must not turn a sent message into an error.
+    }
+  };
 
   const handleContactSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -174,17 +182,17 @@ function App() {
       if (!data.success) {
         throw new Error(data.message || 'Failed to send message.');
       }
-
-      setFormStatus('success');
-      (e.target as HTMLFormElement).reset();
-      setCaptchaToken('');
-      if (captchaRef.current && window.hcaptcha) window.hcaptcha.reset(captchaRef.current);
     } catch (err) {
       setFormStatus('error');
       setFormError(err instanceof Error ? err.message : 'Something went wrong.');
-      setCaptchaToken('');
-      if (captchaRef.current && window.hcaptcha) window.hcaptcha.reset(captchaRef.current);
+      resetCaptcha();
+      return;
     }
+
+    // The success view unmounts the captcha, so render a fresh one for "Send another".
+    captchaWidgetId.current = null;
+    setCaptchaToken('');
+    setFormStatus('success');
   };
 
   return (

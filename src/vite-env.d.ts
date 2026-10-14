@@ -19,7 +19,7 @@ interface HCaptchaRenderOptions {
 
 interface HCaptcha {
   render(el: HTMLElement, options: HCaptchaRenderOptions): string;
-  reset(el?: HTMLElement): void;
+  reset(widgetId?: string): void;
 }
 
 interface Window {

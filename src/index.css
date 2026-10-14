@@ -39,7 +39,7 @@ h1 em, h2 em { color: #2563eb; font-weight: 700; }
 .orbit-card:after { inset: 23%; transform: rotate(-34deg) skewX(12deg); }
 .orbit-line { position: absolute; width: 1px; height: 120%; left: 50%; top: -10%; background: rgba(15,52,96,.08); }
 .orbit-line-two { transform: rotate(90deg); }
-.orbit-core { position: absolute; inset: 39%; display: grid; place-items: center; border-radius: 50%; background: #0a2540; color: #e8f0fc; box-shadow: 0 0 0 12px rgba(10,37,64,.08); font: 700 22px 'Inter', sans-serif; }
+.orbit-core { position: absolute; inset: 39%; display: grid; place-items: center; border-radius: 50%; background: #0a2540; color: #93c5fd; box-shadow: 0 0 0 12px rgba(10,37,64,.08); font: 700 22px 'Inter', sans-serif; }
 .orbit-label { position: absolute; padding: 8px 10px; color: #5a7a9a; background: #f8fafe; font: 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
 .orbit-label-top { top: 15%; left: 10%; }.orbit-label-right { right: 1%; top: 47%; }.orbit-label-bottom { bottom: 17%; left: 22%; }
 .scroll-cue { width: min(1160px, calc(100% - 64px)); margin: -7px auto 0; display: flex; align-items: center; gap: 9px; color: #6b8aaa; font: 10px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }

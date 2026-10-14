@@ -4,7 +4,6 @@ import {
   ChevronDown,
   Code2,
   Download,
-  Github,
   Linkedin,
   Loader2,
   Mail,
@@ -64,7 +63,7 @@ const experiences: Experience[] = [
     role: 'Director of Solutions, Telephony Solutions',
     location: 'Dallas, TX',
     bullets: [
-      'Built a process that reduced ring-back-to-route (RBT) system error rates to less than 5% annually.',
+      'Built a process that reduced ring-back-tone (RBT) system error rates to less than 5% annually.',
       'Drove a new system architecture tied to $2M in software and hardware delivery with $5M projected year-over-year licensing revenue.',
     ],
   },
@@ -233,7 +232,7 @@ function App() {
             <div className="orbit-card">
               <div className="orbit-line orbit-line-one" />
               <div className="orbit-line orbit-line-two" />
-              <div className="orbit-core"><span>SY</span></div>
+              <div className="orbit-core" />
               <span className="orbit-label orbit-label-top">15+ years</span>
               <span className="orbit-label orbit-label-right">Systems thinking</span>
               <span className="orbit-label orbit-label-bottom">Human outcomes</span>
@@ -290,7 +289,7 @@ function App() {
         <section className="section education-section">
           <div className="container education-grid reveal">
             <div><p className="eyebrow">Education & certifications</p><h2>Always learning.<br /><em>Always sharing.</em></h2></div>
-            <div className="education-list"><p><strong>Education</strong> Data Science / Machine Learning — University of Washington<br />Executive MBA — University of Texas at Mannheim<br />BS, Physics & Materials Engineering — Ben-Gurion University of the Negev</p><p><strong>AWS certifications</strong> AWS Certified Solutions Architect · AWS Certified Cloud Developer · AWS Certified Cloud Practitioner</p><p><strong>AI/ML certifications</strong> Machine Learning Specialization · How Transformer LLMs Work · Attention in Transformers: Concepts and Code in PyTorch · Vector Databases: from Embeddings to Applications · Building and Evaluating Advanced RAG · AI Agents Fundamentals</p><p><strong>Community</strong> Member, Israeli AI Community — a monthly peer group of AI practitioners from leading technology firms.</p></div>
+            <div className="education-list"><p><strong>Education</strong> Data Science / Machine Learning — University of Washington<br />Executive MBA — University of Texas at Dallas<br />BS, Physics & Materials Engineering — Ben-Gurion University of the Negev</p><p><strong>AWS certifications</strong> AWS Certified Solutions Architect · AWS Certified Cloud Developer · AWS Certified Cloud Practitioner</p><p><strong>AI/ML certifications</strong> Machine Learning Specialization · How Transformer LLMs Work · Attention in Transformers: Concepts and Code in PyTorch · Vector Databases: from Embeddings to Applications · Building and Evaluating Advanced RAG · AI Agents Fundamentals</p><p><strong>Community</strong> Member, Israeli AI Community — a monthly peer group of AI practitioners from leading technology firms.</p></div>
           </div>
         </section>
 
@@ -340,7 +339,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="site-footer"><div className="container footer-inner"><span>© {new Date().getFullYear()} Yosef (Seffi) Yaaran</span><div className="social-links"><a href="mailto:seffi@gmail.com" aria-label="Email Yosef"><Mail size={17} /></a><a href="https://www.linkedin.com/in/seffiyaaran" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a><a className="placeholder-link" href="#contact" aria-label="GitHub placeholder"><Github size={17} /><span>GitHub — add link</span></a></div><span className="footer-note"><MapPin size={14} /> Seattle, WA</span></div></footer>
+      <footer className="site-footer"><div className="container footer-inner"><span>© {new Date().getFullYear()} Yosef (Seffi) Yaaran</span><div className="social-links"><a href="mailto:seffi@gmail.com" aria-label="Email Yosef"><Mail size={17} /></a><a href="https://www.linkedin.com/in/seffiyaaran" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a></div><span className="footer-note"><MapPin size={14} /> Seattle, WA</span></div></footer>
 
     </div>
   );

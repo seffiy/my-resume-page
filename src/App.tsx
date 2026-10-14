@@ -104,6 +104,9 @@ const projects = [
   },
 ];
 
+// Web3Forms' shared hCaptcha site key; their server verifies tokens issued for it.
+const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
+
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 function App() {
@@ -120,7 +123,7 @@ function App() {
       if (!window.hcaptcha || !captchaRef.current) return false;
       try {
         captchaWidgetId.current = window.hcaptcha.render(captchaRef.current, {
-          sitekey: '10000000-ffff-ffff-ffff-000000000001',
+          sitekey: HCAPTCHA_SITEKEY,
           theme: 'dark',
           callback: (token: string) => setCaptchaToken(token),
           'expired-callback': () => setCaptchaToken(''),
@@ -164,7 +167,7 @@ function App() {
       message: formData.get('message') as string,
       subject: `New contact form submission from ${formData.get('name')}`,
       from_name: 'Portfolio Website',
-      hcaptcha_token: captchaToken,
+      'h-captcha-response': captchaToken,
     };
 
     try {

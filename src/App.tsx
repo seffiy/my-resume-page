@@ -1,5 +1,6 @@
 import {
   ArrowUpRight,
+  BrainCircuit,
   Check,
   ChevronDown,
   Code2,
@@ -232,7 +233,7 @@ function App() {
             <div className="orbit-card">
               <div className="orbit-line orbit-line-one" />
               <div className="orbit-line orbit-line-two" />
-              <div className="orbit-core" />
+              <div className="orbit-core"><BrainCircuit size={30} strokeWidth={1.5} aria-hidden="true" /></div>
               <span className="orbit-label orbit-label-top">15+ years</span>
               <span className="orbit-label orbit-label-right">Systems thinking</span>
               <span className="orbit-label orbit-label-bottom">Human outcomes</span>
